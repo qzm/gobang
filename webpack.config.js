@@ -49,8 +49,12 @@ module.exports = {
         removeAttributeQuotes: true
       }
     }),
-    // 删除多余的bundle
-    new CleanWebpackPlugin( ['dist/bundle.*.js'], {
+    // 删除多余的bundle,Style,index文件
+    new CleanWebpackPlugin( [
+      'dist/bundle.*.js',
+      'dist/style.*.css',
+      'dist/index.html'
+    ], {
         root: __dirname,
         verbose: true,
         dry: false
