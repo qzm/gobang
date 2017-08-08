@@ -9,11 +9,19 @@
 * less and less-loader
 
 ## 安装
+```shell
 yarn install
+```
 
 ## 开发
+```shell
+yarn start
+# or
 yarn run dev
+```
 
 ## 编译打包
+```shell
 yarn run build
+```
 
