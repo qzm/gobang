@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 console.log(__dirname);
 
@@ -20,24 +21,20 @@ module.exports = {
         presets: ['env', 'es2015', 'stage-2']
       },
       include: [__dirname + '/src']
-    },{
+    }, {
       test: /\.less$/,
-      use: [
-        { loader: "style-loader/url" },
-        {
-          loader: "file-loader", options: {
-            name: 'style.[hash:8].min.css'
-          }
-        },
-        // autoprefixer,cssnano
-        { loader: "postcss-loader" },
-        { loader: "less-loader" },
-      ]
+      loader: ExtractTextPlugin.extract([
+        "css-loader",
+        "postcss-loader",
+        "less-loader"
+      ])
     }]
+
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin("style.[hash:8].min.css"),
     // HTML注入js
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -50,16 +47,13 @@ module.exports = {
       }
     }),
     // 删除多余的bundle,Style,index文件
-    new CleanWebpackPlugin( [
-      'dist/bundle.*.js',
-      'dist/style.*.css',
-      'dist/index.html'
+    new CleanWebpackPlugin([
+      'dist/*',
     ], {
-        root: __dirname,
-        verbose: true,
-        dry: false
-      }
-    )
+      root: __dirname,
+      verbose: true,
+      dry: false
+    })
   ],
 
 };

@@ -5,8 +5,8 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "webpack-dev-server",
-    "start" : "webpack-dev-server",
+    "dev": "webpack-dev-server",
+    "start": "webpack-dev-server",
     "build": "webpack -p"
   },
   "keywords": [
@@ -27,6 +27,7 @@
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.28.4",
     "cssnano": "^3.10.0",
+    "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-loader": "^0.5.0",
     "html-webpack-plugin": "^2.30.1",
