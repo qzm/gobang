@@ -52,7 +52,8 @@ module.exports = {
     ], {
       root: __dirname,
       verbose: true,
-      dry: false
+      dry: false,
+      "watch": true
     })
   ],
 
