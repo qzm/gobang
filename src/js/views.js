@@ -1,3 +1,6 @@
+// 对象池
+import pool from './Pool';
+
 /**
  * View 基类
  */

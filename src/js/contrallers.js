@@ -1,4 +1,9 @@
-// 控制层
+// 对象池
+import pool from './Pool';
+
+/**
+ * Contraller 基类
+ */
 class Contraller {
   constructor(view) {
     this.$view = view;

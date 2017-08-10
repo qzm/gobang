@@ -1,4 +1,9 @@
-// 数据层
+// 对象池
+import pool from './Pool';
+
+/**
+ * Model 基类
+ */
 class Model {
   constructor(option) {
     this.name = 'Name is not set!';
@@ -15,6 +20,10 @@ class Model {
   // 基础的打印方法
   toString() {
     return `Model:${this.name}`;
+  }
+  // 回收
+  recover() {
+
   }
 }
 
