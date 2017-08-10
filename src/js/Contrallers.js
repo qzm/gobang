@@ -21,6 +21,11 @@ class Contraller {
   toString() {
     return `Contraller:${this.name}`;
   }
+  // 回收
+  recover() {
+    // TODO:回收对象
+  }
+
 }
 /**
  * 棋子控制器

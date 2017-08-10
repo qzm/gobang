@@ -12,3 +12,20 @@ function animation() {
   run(animation);
 }
 run(animation);
+
+// 控制面板 - 开始
+document.getElementById('play').addEventListener('click', () => {
+
+});
+// 控制面板 - 重玩
+document.getElementById('replay').addEventListener('click', () => {
+
+});
+// 控制面板 - 悔棋
+document.getElementById('withdraw').addEventListener('click', () => {
+
+});
+// 控制面板 - 退出游戏
+document.getElementById('signout').addEventListener('click', () => {
+
+});

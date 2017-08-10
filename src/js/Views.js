@@ -26,6 +26,11 @@ class View {
   draw() {
     console.error(`还未定义【${this.name}】的绘制方法`);
   }
+  // 回收
+  recover() {
+    // TODO:回收对象
+  }
+
 }
 /**
  * 棋子的视图

@@ -23,7 +23,7 @@ class Model {
   }
   // 回收
   recover() {
-
+    // TODO:回收对象
   }
 }
 
