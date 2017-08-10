@@ -4,37 +4,36 @@
  * @return {Object} 对象（精灵）池
  */
 function ObjectPool() {
-  let objectPoolContainer = [];
-  let counter;
+  let objectPool = [];
   return {
-    // init初始化
+    // 初始化对象池
     init(size = 100) {
-      let poolSize = size;
-      counter = poolSize;
-      while(poolSize --) {
-        const div = document.createElement('div');
-        div.setAttribute(':data-object-index', size - poolSize);
-        document.body.appendChild(div);
-        objectPoolContainer.push(div);
+      while (size--) {
+        objectPool.push({});
       }
+      return objectPool;
     },
-    // 创建
+    // 创建新的对象
     create() {
-      if (objectPoolContainer.length === 0) {
-        const div = document.createElement('div');
-        div.setAttribute(':data-object-index', ++ counter);
-        document.body.appendChild(div);
-        objectPoolContainer.push(div);
-        return div;
+      if (objectPool.length) {
+        return objectPool.shift();
       } else {
-        return objectPoolContainer.shift();
+        objectPool.push({});
       }
     },
-    // 回收
-    recover(element) {
-      return objectPoolContainer.push(element);
+    // 销毁整个对象池
+    destory() {
+      objectPool = [];
+    },
+    // 回收一个对象
+    recover(obj) {
+      objectPool.push(obj);
+    },
+    // 获得大小
+    size() {
+      return objectPool.length();
     }
-  };
+  }
 }
 
 /**

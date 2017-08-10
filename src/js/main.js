@@ -1,4 +1,15 @@
-import { ObjectPool } from './util.js';
-console.info('游戏开始了！');
+import { ObjectPool } from './Util';
+import { PieceContraller } from './Contrallers';
+import { PieceView } from './Views';
+import { PieceModel } from './Models';
+
+// 对象池
 const pool = ObjectPool();
-pool.init(10);
+pool.init();
+
+let piece = pool.create();
+piece = new PieceContraller(new PieceView(new PieceModel({
+  name: 'Piece'
+})));
+
+console.log(piece);
