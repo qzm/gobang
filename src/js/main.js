@@ -1,4 +1,4 @@
-import { ObjectPool } from './Util';
+import { run, ObjectPool } from './Util';
 import { PieceContraller } from './Contrallers';
 import { PieceView } from './Views';
 import { PieceModel } from './Models';
@@ -12,4 +12,7 @@ piece = new PieceContraller(new PieceView(new PieceModel({
   name: 'Piece'
 })));
 
-console.log(piece);
+//  动画循环
+run(() => {
+  console.log(piece);
+})

@@ -46,6 +46,18 @@ function judgeSuccess(gobangData) {
 }
 
 /**
+ * 封装requestAnimationFrame
+ */
+const run = (function () {
+  return window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
+})();
+
+/**
  * 闭包缓存纯函数的结果
  * @param {Function} fn 需要缓存的函数
  * @return {Function} 修改后的函数
@@ -171,6 +183,7 @@ const isWeakSet = typeFactory('WeakSet');
 
 
 export {
+  run,
   ObjectPool,
   judgeSuccess,
   typeFactory,
