@@ -21,24 +21,45 @@ import {
 const mvvm = {
   playerMsg: ''
 };
-for (var props in mvvm) {
-  Object.defineProperty(mvvm, props, {
-    set(newValue) {
-      const elementList = document.querySelectorAll(`[q-model=${props}]`)
-      elementList.forEach((oneElement) => {
-        oneElement.innerText = newValue;
-        oneElement.value = newValue;
-      });
+
+// 设置Property
+const setProperty = function (mvvm, bindModel) {
+  Object.defineProperty(mvvm, bindModel, {
+    enumerable: true,
+    get: function () {
+      return document.querySelector('[q-model=' + bindModel + ']').value;
+    },
+    set: function (newValue) {
+      // 赋值到Dom
+      let allBindingElement = document.querySelectorAll('[q-model=' + bindModel + ']');
+      for (let i = 0; i < allBindingElement.length; i++) {
+        // 修改value
+        allBindingElement[i].value = newValue;
+        // 修改innerText
+        try {
+          allBindingElement[i].innerText = newValue;
+        } catch (err) { }
+      }
     }
   });
 }
+// 绑定数据
+window.onload = function() {
+  for (let bindModel in mvvm) {
+    if (mvvm.hasOwnProperty(bindModel)) {
+      setProperty(mvvm, bindModel);
+    }
+  }
+}
+
 
 const canvas = document.getElementById('canvas-view');
 const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const canvasGap = 20;
-let player = 'white';
+let player = 0;
+let isGameStart = false;
 let isGameOver = true;
 // hello
 const hello = new Contraller(new View(new Model({ name: 'Welcome to this game!' })));
@@ -58,7 +79,6 @@ const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardMod
 // 棋子列表
 let pieceList = '';
 
-console.log(pieceList);
 //  动画循环
 function animation() {
   // 清空棋盘
@@ -74,12 +94,23 @@ function animation() {
 }
 run(animation);
 
+function setPlayer() {
+  if (player) {
+    mvvm.playerMsg = '【黑方】执棋';
+    player = 0;
+  } else {
+    mvvm.playerMsg = '【白方】执棋';
+    player = 1;
+  }
+}
 
 // 控制面板 - 开始
 const playButton = document.getElementById('play');
 playButton.addEventListener('click', () => {
+  isGameStart = true;
   isGameOver = false;
   pieceList = null;
+  player = 0;
   pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
     name: 'PieceList'
   })));
@@ -90,33 +121,31 @@ playButton.addEventListener('click', () => {
 document.getElementById('withdraw').addEventListener('click', () => {
   if (pieceList) {
     pieceList.pop();
+    setPlayer();
   }
 });
 // 控制面板 - 退出游戏
 document.getElementById('signout').addEventListener('click', () => {
   alert('关闭浏览器就好了呀！');
 });
-let aaa = true;
-let type = 'black';
+
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
-  if (aaa) {
-    type = 'black';
-    aaa = false;
+  if (isGameStart && !isGameOver) {
+    setPlayer();
+    let piece = new PieceContraller(new PieceView(new PieceModel({
+      type: player ? 'balck' : 'white',
+      x: event.layerX,
+      y: event.layerY,
+      radius: 15,
+      lineColor: '#333'
+    })));
+    // console.log(piece);
+    if (pieceList) {
+      pieceList.push(piece);
+    }
+    // piece.$view.draw(ctx);
   } else {
-    type = 'white';
-    aaa = true;
+    alert('请开始游戏');
   }
-  let piece = new PieceContraller(new PieceView(new PieceModel({
-    type,
-    x: event.layerX,
-    y: event.layerY,
-    radius: 15,
-    lineColor: '#333'
-  })));
-  // console.log(piece);
-  if (pieceList) {
-    pieceList.push(piece);
-  }
-  // piece.$view.draw(ctx);
 });
