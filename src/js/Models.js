@@ -6,8 +6,7 @@ import pool from './Pool';
  */
 class Model {
   constructor(option) {
-    this.name = 'Name is not set!';
-    Object.assign(this, option);
+    this.name = option.name;
   }
   // 设置名称
   setName(name) {
@@ -36,6 +35,15 @@ class PieceModel extends Model {
   }
 }
 /**
+ * 棋子列表数据
+ */
+class PieceListModel extends Model {
+  constructor(option) {
+    super(option);
+    this.pieceList = [];
+  }
+}
+/**
  * 棋盘数据
  */
 class ChessboardModel extends Model {
@@ -55,5 +63,6 @@ class ChessboardModel extends Model {
 export {
   Model,
   PieceModel,
+  PieceListModel,
   ChessboardModel,
 }

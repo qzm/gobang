@@ -43,31 +43,43 @@ class PieceView extends View {
   }
 }
 /**
+ * 棋子数组的视图
+ * @param {PiectModel} model
+ */
+class PieceListView extends View {
+  constructor(pieceListModel) {
+    super(pieceListModel);
+  }
+  // 绘制所有棋子
+  draw(ctx) {
+    this.$model.pieceList.forEach(onePiece => onePiece.$view.draw(ctx));
+  }
+}
+/**
  * 棋盘的视图
  * @param {chessboardModel} model
  */
-// 私有方法，画线
-function drwaLine(canvas, pFrom, pTo, color, width) {
-  canvas.beginPath();
-  canvas.fillStyle = color;
-  canvas.lineWidth = width;
-  canvas.moveTo(pFrom.x, pFrom.y);
-  canvas.lineTo(pTo.x, pTo.y);
-  canvas.closePath();
-  canvas.stroke();
-}
 class ChessboardView extends View {
   constructor(chessboardModel) {
     super(chessboardModel);
   }
-
+  // 画线
+  drwaLine(canvas, pFrom, pTo, color, width) {
+    canvas.beginPath();
+    canvas.fillStyle = color;
+    canvas.lineWidth = width;
+    canvas.moveTo(pFrom.x, pFrom.y);
+    canvas.lineTo(pTo.x, pTo.y);
+    canvas.closePath();
+    canvas.stroke();
+  }
   // 画横线
   drawVerticalLine(canvas, pFrom, pTo) {
-    drwaLine(canvas, pFrom, pTo, this.$model.lineColor, this.$model.lineWidth);
+    this.drwaLine(canvas, pFrom, pTo, this.$model.lineColor, this.$model.lineWidth);
   }
   // 画竖线
   drawHorizontalLine(canvas, pFrom, pTo) {
-    drwaLine(canvas, pFrom, pTo, this.$model.lineColor, this.$model.lineWidth);
+    this.drwaLine(canvas, pFrom, pTo, this.$model.lineColor, this.$model.lineWidth);
   }
   // 背景图
   drawBackground(canvas, color) {
@@ -101,5 +113,6 @@ class ChessboardView extends View {
 export {
   View,
   PieceView,
+  PieceListView,
   ChessboardView,
 }

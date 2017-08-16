@@ -3,16 +3,19 @@ import {
   Contraller,
   PieceContraller,
   ChessboardContraller,
+  PieceListContraller,
 } from './Contrallers';
 import {
   View,
   PieceView,
   ChessboardView,
+  PieceListView,
 } from './Views';
 import {
   Model,
   PieceModel,
   ChessboardModel,
+  PieceListModel,
 } from './Models';
 const canvas = document.getElementById('canvas-view');
 const ctx = canvas.getContext('2d');
@@ -25,7 +28,7 @@ const hello = new Contraller(new View(new Model({ name: 'Welcome to this game!' 
 console.info(hello.getName());
 
 // 棋盘
-const chessboard = new Contraller(new ChessboardView(new ChessboardModel({
+const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardModel({
   x: canvasGap,
   y: canvasGap,
   width: canvasWidth - canvasGap * 2,
@@ -36,19 +39,19 @@ const chessboard = new Contraller(new ChessboardView(new ChessboardModel({
 })));
 
 // 棋子列表
-let pieceList = [];
+let pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
+  name: 'PieceList'
+})));
 
-
+console.log(pieceList);
 //  动画循环
 function animation() {
   // 清空棋盘
-  ctx.clearRect(0,0,canvasWidth,canvasHeight)
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   // 绘制棋盘
   chessboard.$view.draw(ctx);
-  // 绘制棋子
-  for (onePiece of pieceList) {
-    onePiece.draw(ctx);
-  }
+  // 绘制棋子列表
+  pieceList.$view.draw(ctx);
   // some step
   run(animation);
 }
@@ -72,9 +75,12 @@ document.getElementById('signout').addEventListener('click', () => {
 });
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
+  pieceList.push(new PieceContraller(new PieceView(new PieceModel({
+
+  }))));
   const clickPoint = {
     x: event.layerX,
     y: event.layerY
   }
-  console.log(clickPoint);
+  console.log(pieceList);
 });

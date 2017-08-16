@@ -35,6 +35,22 @@ class PieceContraller extends Contraller {
     super(view);
   }
 }
+/**
+ * 棋子数组控制器
+ */
+class PieceListContraller extends Contraller {
+  constructor(view) {
+    super(view);
+  }
+  // 新增一枚棋子
+  push(pieceCtrl) {
+    this.$view.$model.pieceList.push(pieceCtrl)
+  }
+  // 悔棋
+  pop() {
+    this.$view.$model.pieceList.pop();
+  }
+}
 
 /**
  * 棋盘控制器
@@ -48,5 +64,6 @@ class ChessboardContraller extends Contraller {
 export {
   Contraller,
   PieceContraller,
+  PieceListContraller,
   ChessboardContraller,
 }
