@@ -181,6 +181,18 @@ const isWeakMap = typeFactory('WeakMap');
  */
 const isWeakSet = typeFactory('WeakSet');
 
+/**
+ * 通过点击的位置，判断落子的位置
+ * @param {Object} clickPoint {x,y}
+ * @param {Int} areaWidth 棋盘的Width
+ * @param {Int} areaHeight 棋盘的Height
+ */
+function getPieceLocation(clickPoint, areaWidth, areaHeight) {
+  return {
+    x: clickPoint.x,
+    y: clickPoint.y
+  }
+}
 
 export {
   run,

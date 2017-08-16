@@ -36,7 +36,17 @@ class PieceContraller extends Contraller {
   }
 }
 
+/**
+ * 棋盘控制器
+ */
+class ChessboardContraller extends Contraller {
+  constructor(view) {
+    super(view);
+  }
+}
+
 export {
   Contraller,
   PieceContraller,
+  ChessboardContraller,
 }

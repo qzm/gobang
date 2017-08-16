@@ -24,7 +24,6 @@ class View {
   }
   // 绘制方法
   draw() {
-    console.error(`还未定义【${this.name}】的绘制方法`);
   }
   // 回收
   recover() {
@@ -41,11 +40,66 @@ class PieceView extends View {
     super(pieceModel);
   }
   draw() {
-    console.log('绘制棋子');
+  }
+}
+/**
+ * 棋盘的视图
+ * @param {chessboardModel} model
+ */
+// 私有方法，画线
+function drwaLine(canvas, pFrom, pTo, color, width) {
+  canvas.beginPath();
+  canvas.fillStyle = color;
+  canvas.lineWidth = width;
+  canvas.moveTo(pFrom.x, pFrom.y);
+  canvas.lineTo(pTo.x, pTo.y);
+  canvas.closePath();
+  canvas.stroke();
+}
+class ChessboardView extends View {
+  constructor(chessboardModel) {
+    super(chessboardModel);
+  }
+
+  // 画横线
+  drawVerticalLine(canvas, pFrom, pTo) {
+    drwaLine(canvas, pFrom, pTo, this.$model.lineColor, this.$model.lineWidth);
+  }
+  // 画竖线
+  drawHorizontalLine(canvas, pFrom, pTo) {
+    drwaLine(canvas, pFrom, pTo, this.$model.lineColor, this.$model.lineWidth);
+  }
+  // 背景图
+  drawBackground(canvas, color) {
+
+  }
+  // 绘制
+  draw(canvas) {
+    const stepX = this.$model.width / 15;
+    const stepY = this.$model.height / 15;
+    for (var i = 1; i < 16; i++) {
+      this.drawVerticalLine(canvas, {
+        x: this.$model.x,
+        y: stepX * i
+      }, {
+        x: this.$model.width + this.$model.x,
+        y: stepX * i
+      });
+      this.drawHorizontalLine(canvas, {
+        x: stepY * i,
+        y: this.$model.y
+      }, {
+        x: stepY * i,
+        y: this.$model.height + this.$model.y
+      });
+    }
+    // 背景
+
   }
 }
 
 export {
   View,
   PieceView,
+  ChessboardView,
 }

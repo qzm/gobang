@@ -1,6 +1,6 @@
 // 数据存储，用于悔棋
 
-Class Storage {
+class Storage {
   constructor() {
     this.database = [];
   }

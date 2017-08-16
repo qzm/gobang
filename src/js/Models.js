@@ -27,13 +27,33 @@ class Model {
   }
 }
 
+/**
+ * 棋子数据
+ */
 class PieceModel extends Model {
   constructor(option) {
     super(option);
   }
 }
+/**
+ * 棋盘数据
+ */
+class ChessboardModel extends Model {
+  constructor(option) {
+    super(option);
+    this.x = option.x;
+    this.y = option.y;
+    this.width = option.width;
+    this.height = option.height;
+    this.lineColor = option.lineColor || '#333333';
+    this.lineWidth = option.lineWidth || 1;
+  }
+}
+
+
 
 export {
   Model,
   PieceModel,
+  ChessboardModel,
 }
