@@ -1,4 +1,4 @@
-import { run } from './Util';
+import { run, getPieceLocation, cached } from './Util';
 import {
   Contraller,
   PieceContraller,
@@ -133,10 +133,16 @@ document.getElementById('signout').addEventListener('click', () => {
 document.getElementById('canvas-view').addEventListener('click', (event) => {
   if (isGameStart && !isGameOver) {
     setPlayer();
+    const point = getPieceLocation(
+      event.layerX,
+      event.layerY,
+      canvasWidth,
+      canvasHeight
+    );
     let piece = new PieceContraller(new PieceView(new PieceModel({
       type: player ? 'balck' : 'white',
-      x: event.layerX,
-      y: event.layerY,
+      x: point.x,
+      y: point.y,
       radius: 15,
       lineColor: '#333'
     })));

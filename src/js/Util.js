@@ -187,16 +187,15 @@ const isWeakSet = typeFactory('WeakSet');
  * @param {Int} areaWidth 棋盘的Width
  * @param {Int} areaHeight 棋盘的Height
  */
-function getPieceLocation(clickPoint, areaWidth, areaHeight) {
-  return {
-    x: clickPoint.x,
-    y: clickPoint.y
-  }
-}
+const getPieceLocation = cached((x, y, areaWidth, areaHeight) => {
+  console.log({ x, y });
+  return { x, y };
+});
 
 export {
   run,
   cached,
+  getPieceLocation,
   ObjectPool,
   judgeSuccess,
   typeFactory,
