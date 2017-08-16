@@ -23,6 +23,7 @@ const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const canvasGap = 20;
 let player = 'white';
+let isGameOver = true;
 // hello
 const hello = new Contraller(new View(new Model({ name: 'Welcome to this game!' })));
 console.info(hello.getName());
@@ -39,9 +40,7 @@ const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardMod
 })));
 
 // 棋子列表
-let pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
-  name: 'PieceList'
-})));
+let pieceList = '';
 
 console.log(pieceList);
 //  动画循环
@@ -51,7 +50,9 @@ function animation() {
   // 绘制棋盘
   chessboard.$view.draw(ctx);
   // 绘制棋子列表
-  pieceList.$view.draw(ctx);
+  if (pieceList) {
+    pieceList.$view.draw(ctx);
+  }
   // some step
   run(animation);
 }
@@ -59,15 +60,26 @@ run(animation);
 
 // 控制面板 - 开始
 document.getElementById('play').addEventListener('click', () => {
-
+  isGameOver = false;
+  pieceList = null;
+  pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
+  name: 'PieceList'
+})));
 });
 // 控制面板 - 重玩
 document.getElementById('replay').addEventListener('click', () => {
+  isGameOver = false;
+  pieceList = null;
+  pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
+  name: 'PieceList'
+})));
 
 });
 // 控制面板 - 悔棋
 document.getElementById('withdraw').addEventListener('click', () => {
-
+  if (pieceList) {
+    pieceList.pop();
+  }
 });
 // 控制面板 - 退出游戏
 document.getElementById('signout').addEventListener('click', () => {
@@ -92,6 +104,8 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
     lineColor: '#333'
   })));
   // console.log(piece);
-  pieceList.push(piece);
+  if (pieceList) {
+    pieceList.push(piece);
+  }
   // piece.$view.draw(ctx);
 });
