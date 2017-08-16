@@ -17,6 +17,22 @@ import {
   ChessboardModel,
   PieceListModel,
 } from './Models';
+// 简单的单向数据绑定
+const mvvm = {
+  playerMsg: ''
+};
+for (var props in mvvm) {
+  Object.defineProperty(mvvm, props, {
+    set(newValue) {
+      const elementList = document.querySelectorAll(`[q-model=${props}]`)
+      elementList.forEach((oneElement) => {
+        oneElement.innerText = newValue;
+        oneElement.value = newValue;
+      });
+    }
+  });
+}
+
 const canvas = document.getElementById('canvas-view');
 const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
@@ -58,23 +74,18 @@ function animation() {
 }
 run(animation);
 
-// 控制面板 - 开始
-document.getElementById('play').addEventListener('click', () => {
-  isGameOver = false;
-  pieceList = null;
-  pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
-  name: 'PieceList'
-})));
-});
-// 控制面板 - 重玩
-document.getElementById('replay').addEventListener('click', () => {
-  isGameOver = false;
-  pieceList = null;
-  pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
-  name: 'PieceList'
-})));
 
+// 控制面板 - 开始
+const playButton = document.getElementById('play');
+playButton.addEventListener('click', () => {
+  isGameOver = false;
+  pieceList = null;
+  pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
+    name: 'PieceList'
+  })));
+  playButton.innerText = '重新开始';
 });
+
 // 控制面板 - 悔棋
 document.getElementById('withdraw').addEventListener('click', () => {
   if (pieceList) {
@@ -83,7 +94,7 @@ document.getElementById('withdraw').addEventListener('click', () => {
 });
 // 控制面板 - 退出游戏
 document.getElementById('signout').addEventListener('click', () => {
-
+  alert('关闭浏览器就好了呀！');
 });
 let aaa = true;
 let type = 'black';
