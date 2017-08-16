@@ -196,6 +196,7 @@ function getPieceLocation(clickPoint, areaWidth, areaHeight) {
 
 export {
   run,
+  cached,
   ObjectPool,
   judgeSuccess,
   typeFactory,
