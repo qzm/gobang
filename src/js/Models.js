@@ -32,6 +32,13 @@ class Model {
 class PieceModel extends Model {
   constructor(option) {
     super(option);
+    this.x = option.x;
+    this.y = option.y;
+    this.radius = option.radius;
+    this.lineColor = option.lineColor;
+    this.lineWidth = option.lineWidth;
+    // black || white
+    this.type = option.type;
   }
 }
 /**

@@ -39,7 +39,25 @@ class PieceView extends View {
   constructor(pieceModel) {
     super(pieceModel);
   }
-  draw() {
+  draw(canvas) {
+    canvas.beginPath();
+    canvas.lineWidth = this.$model.lineWidth;
+    if(this.$model.type === 'white') {
+      canvas.fillStyle = 'white';
+    } else {
+      canvas.fillStyle = this.$model.lineColor;
+    }
+    canvas.strokeStyle = this.$model.lineColor;
+    canvas.arc(
+      this.$model.x,
+      this.$model.y,
+      this.$model.radius,
+      0,
+      Math.PI * 2,
+      true);
+    canvas.closePath();
+		canvas.fill();
+    canvas.stroke();
   }
 }
 /**
@@ -51,8 +69,8 @@ class PieceListView extends View {
     super(pieceListModel);
   }
   // 绘制所有棋子
-  draw(ctx) {
-    this.$model.pieceList.forEach(onePiece => onePiece.$view.draw(ctx));
+  draw(canvas) {
+    this.$model.pieceList.forEach(onePiece => onePiece.$view.draw(canvas));
   }
 }
 /**
@@ -66,7 +84,7 @@ class ChessboardView extends View {
   // 画线
   drwaLine(canvas, pFrom, pTo, color, width) {
     canvas.beginPath();
-    canvas.fillStyle = color;
+    canvas.strokeStyle = color;
     canvas.lineWidth = width;
     canvas.moveTo(pFrom.x, pFrom.y);
     canvas.lineTo(pTo.x, pTo.y);

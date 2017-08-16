@@ -22,7 +22,7 @@ const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const canvasGap = 20;
-
+let player = 'white';
 // hello
 const hello = new Contraller(new View(new Model({ name: 'Welcome to this game!' })));
 console.info(hello.getName());
@@ -34,7 +34,7 @@ const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardMod
   width: canvasWidth - canvasGap * 2,
   height: canvasHeight - canvasGap * 2,
   lineColor: '#ddd',
-  lineWidth: 0.1,
+  lineWidth: 1,
   name: 'chessboard'
 })));
 
@@ -73,14 +73,25 @@ document.getElementById('withdraw').addEventListener('click', () => {
 document.getElementById('signout').addEventListener('click', () => {
 
 });
+let aaa = true;
+let type = 'black';
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
-  pieceList.push(new PieceContraller(new PieceView(new PieceModel({
-
-  }))));
-  const clickPoint = {
-    x: event.layerX,
-    y: event.layerY
+  if (aaa) {
+    type = 'black';
+    aaa = false;
+  } else {
+    type = 'white';
+    aaa = true;
   }
-  console.log(pieceList);
+  let piece = new PieceContraller(new PieceView(new PieceModel({
+    type,
+    x: event.layerX,
+    y: event.layerY,
+    radius: 15,
+    lineColor: '#333'
+  })));
+  // console.log(piece);
+  pieceList.push(piece);
+  // piece.$view.draw(ctx);
 });
