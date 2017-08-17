@@ -187,15 +187,45 @@ const isWeakSet = typeFactory('WeakSet');
  * @param {Int} areaWidth 棋盘的Width
  * @param {Int} areaHeight 棋盘的Height
  */
-const getPieceLocation = cached((x, y, areaWidth, areaHeight) => {
-  console.log({ x, y });
-  return { x, y };
+const getPieceLocation = cached((x, y, areaWidth, areaHeight, gap) => {
+  const widthStep = (areaWidth - gap * 2) / 15
+  const heightStep = (areaHeight - gap * 2) / 15
+  console.log(widthStep, heightStep);
+  const a = Math.floor((x - gap) / widthStep);
+  const b = Math.floor((y - gap) / heightStep);
+  console.log({ x, y, a, b});
+  return {
+    x: (a + 0.5 ) * widthStep + gap,
+    y: (b + 0.5 ) * heightStep + gap,
+    a,
+    b
+  };
 });
+
+/**
+ * 棋子是否已经存在棋盘中
+ * @param {Object} pieceList
+ * @param {Object} point
+ */
+function notInChessboard(pieceList, point) {
+  const list = pieceList.$view.$model.pieceList;
+  if (isArray(list)) {
+    let isNotInChessboard = true;
+    list.forEach((onePiece) => {
+      if (onePiece.$view.$model.a === point.a && onePiece.$view.$model.b === point.b) {
+        isNotInChessboard = false;
+      }
+    });
+    return isNotInChessboard;
+  }
+  throw 'pieceList不是数组';
+}
 
 export {
   run,
   cached,
   getPieceLocation,
+  notInChessboard,
   ObjectPool,
   judgeSuccess,
   typeFactory,

@@ -1,4 +1,4 @@
-import { run, getPieceLocation, cached } from './Util';
+import { run, getPieceLocation, cached, notInChessboard, judgeSuccess } from './Util';
 import {
   Contraller,
   PieceContraller,
@@ -88,6 +88,10 @@ function animation() {
   // 绘制棋子列表
   if (pieceList) {
     pieceList.$view.draw(ctx);
+    // 判断胜负
+    if (judgeSuccess(pieceList)) {
+      isGameOver = true;
+    }
   }
   // some step
   run(animation);
@@ -132,26 +136,39 @@ document.getElementById('signout').addEventListener('click', () => {
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
   if (isGameStart && !isGameOver) {
-    setPlayer();
     const point = getPieceLocation(
       event.layerX,
       event.layerY,
       canvasWidth,
-      canvasHeight
+      canvasHeight,
+      canvasGap
     );
-    let piece = new PieceContraller(new PieceView(new PieceModel({
-      type: player ? 'balck' : 'white',
-      x: point.x,
-      y: point.y,
-      radius: 15,
-      lineColor: '#333'
-    })));
-    // console.log(piece);
-    if (pieceList) {
-      pieceList.push(piece);
+    // 边界条件
+    if (
+      (point.a >= 0 && point.b >= 0) &&
+      (point.a < 15 && point.b < 15) &&
+      notInChessboard(pieceList, point)
+    ) {
+      setPlayer();
+      let piece = new PieceContraller(new PieceView(new PieceModel({
+        type: player ? 'balck' : 'white',
+        // canvas位置
+        x: point.x,
+        y: point.y,
+        // 棋盘位置
+        a: point.a,
+        b: point.b,
+        radius: 15,
+        lineColor: '#333'
+      })));
+      // console.log(piece);
+      if (pieceList) {
+        pieceList.push(piece);
+      }
     }
+
     // piece.$view.draw(ctx);
-  } else {
+  } else if (!isGameStart){
     alert('请开始游戏');
   }
 });

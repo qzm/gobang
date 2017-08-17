@@ -32,8 +32,12 @@ class Model {
 class PieceModel extends Model {
   constructor(option) {
     super(option);
+    // 图片位置
     this.x = option.x;
     this.y = option.y;
+    // 棋盘位置
+    this.a = option.a;
+    this.b = option.b;
     this.radius = option.radius;
     this.lineColor = option.lineColor;
     this.lineWidth = option.lineWidth;
