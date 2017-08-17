@@ -88,10 +88,6 @@ function animation() {
   // 绘制棋子列表
   if (pieceList) {
     pieceList.$view.draw(ctx);
-    // 判断胜负
-    if (judgeSuccess(pieceList)) {
-      isGameOver = true;
-    }
   }
   // some step
   run(animation);
@@ -165,10 +161,15 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       if (pieceList) {
         pieceList.push(piece);
       }
+      // 判断胜负
+      if (judgeSuccess(pieceList)) {
+        isGameOver = true;
+      }
     }
 
     // piece.$view.draw(ctx);
   } else if (!isGameStart){
     alert('请开始游戏');
   }
+
 });

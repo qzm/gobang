@@ -37,11 +37,110 @@ function ObjectPool() {
 }
 
 /**
+ * 生成一个 15 * 15 的二维数组
+ */
+function makeMatrix() {
+    // 初始化矩阵
+  let matrix = [];
+  let counter = 15;
+  while (counter--) {
+    matrix.push((() => {
+      let arr = [];
+      arr.length = 15;
+      return arr;
+    })());
+  }
+  return matrix;
+}
+/**
+ * 将所有棋子的位置，转换成二维数组
+ * @param {Array} list
+ */
+
+function toMatrix(list) {
+  // console.log(list);
+  // 生成一个空白的二维数组
+  let matrix = makeMatrix();
+  // 将对象填充进去
+  list.forEach((onePiece) => {
+    matrix[onePiece.$view.$model.a][onePiece.$view.$model.b] = onePiece;
+  });
+  console.log(matrix);
+  return matrix;
+}
+
+/**
+ * 横向是否有连续五颗棋子
+ * @param {Array} matrix
+ * @param {Object} lastPiece
+ */
+function isVerticalSuccess(matrix, lastPiece) {
+  let sum = 0;
+  let left = lastPiece.$view.$model.a - 9;
+  let right = lastPiece.$view.$model.a + 9;
+  left < 0 ? left = 0 : left = left;
+  right > 14 ? right = 14 : right = right;
+  while (left < right - 4) {
+    // TODO: 判断
+    // 往右移动
+    left++;
+  }
+}
+
+/**
+ * 纵向是否有连续五颗棋子
+ * @param {Array} matrix
+ * @param {Object} lastPiece
+ */
+function isHorizontalSuccess(matrix, lastPiece) {
+  let sum = 0;
+
+}
+
+/**
+ * 左上到右下是否有连续五颗棋子
+ * @param {Array} matrix
+ * @param {Object} lastPiece
+ */
+function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
+  let sum = 0;
+
+}
+
+/**
+ * 左上到右下是否有连续五颗棋子
+ * @param {Array} matrix
+ * @param {Object} lastPiece
+ */
+function isRightUpToLeftBottomSuccess(matrix, lastPiece) {
+  let sum = 0;
+
+}
+
+/**
  * 判断当前是否胜利
  * @param {Object} gobangData 棋盘数据
  * @return {Boolean} 是否胜利
  */
-function judgeSuccess(gobangData) {
+function judgeSuccess(pieceList) {
+  const list = pieceList.$view.$model.pieceList;
+  if (isArray(list) && list.length >= 1) {
+    // 生成棋盘矩阵
+    const matrix = toMatrix(list);
+    // 最后一枚棋子位置
+    const lastPiece = list[list.langth - 1];
+    // 横向是否有连续五个棋子
+    const vs = isVerticalSuccess(matrix, lastPiece);
+    // 纵向是否有连续五颗棋子
+    const hs = isHorizontalSuccess(matrix, lastPiece);
+    // 左上到右下是否有连续五颗棋子
+    const urrbs = isLeftUpToRightBottomSuccess(matrix, lastPiece);
+    // 左上到右下是否有连续五颗棋子
+    const rulbs = isRightUpToLeftBottomSuccess(matrix, lastPiece);
+    if (vs || hs || urrbs || rulbs) {
+      return true;
+    }
+  }
   return false;
 }
 
