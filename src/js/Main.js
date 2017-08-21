@@ -59,7 +59,7 @@ const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const canvasGap = 20;
-let player = 0;
+let player = CONFIG.BLACK;
 let isGameStart = false;
 let isGameOver = true;
 // hello
@@ -104,12 +104,12 @@ function animation() {
 run(animation);
 
 function setPlayer() {
-  if (player) {
+  if (player === CONFIG.BLACK) {
     mvvm.playerMsg = CONFIG.lang.CHARGE_BLACK;
-    player = 0;
+    player = CONFIG.WHITE;
   } else {
     mvvm.playerMsg = CONFIG.lang.CHARGE_WHITE;
-    player = 1;
+    player = CONFIG.BLACK;
   }
 }
 
@@ -119,7 +119,7 @@ playButton.addEventListener('click', () => {
   isGameStart = true;
   isGameOver = false;
   pieceList = null;
-  player = 0;
+  player = CONFIG.WHITE;
   pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
     name: 'PieceList'
   })));
@@ -137,7 +137,7 @@ document.getElementById('canvas-view').addEventListener('mousemove', (event) => 
   // console.log(event.layerX, event.layerY);
   handPiece.$view.$model.x = event.layerX;
   handPiece.$view.$model.y = event.layerY;
-  handPiece.$view.$model.type = player ? CONFIG.WHITE : CONFIG.BLACK;
+  handPiece.$view.$model.type = player === CONFIG.BLACK ? CONFIG.WHITE : CONFIG.BLACK;
 });
 // 控制面板 - 退出游戏
 document.getElementById('signout').addEventListener('click', () => {
@@ -163,10 +163,10 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       setPlayer();
       handPiece.$view.$model.x = event.layerX;
       handPiece.$view.$model.y = event.layerY;
-      handPiece.$view.$model.type = player ? CONFIG.WHITE : CONFIG.BLACK;
+      handPiece.$view.$model.type = player === CONFIG.BLACK ? CONFIG.WHITE : CONFIG.BLACK;
 
       let piece = new PieceContraller(new PieceView(new PieceModel({
-        type: player ? CONFIG.BLACK : CONFIG.WHITE,
+        type: player === CONFIG.BLACK ? CONFIG.BLACK : CONFIG.WHITE,
         // canvas位置
         x: point.x,
         y: point.y,
@@ -174,7 +174,7 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
         a: point.a,
         b: point.b,
         radius: 15,
-        lineColor: '#333'
+        lineColor: CONFIG.BLACK_COLOR
       })));
       // console.log(piece);
       if (pieceList) {
@@ -183,7 +183,7 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       // 判断胜负
       if (judgeSuccess(pieceList)) {
         setTimeout(() => {
-          alert(`【${player ? '黑方' : '白方'}】胜利！！`);
+          alert(`【${player === CONFIG.BLACK ? CONFIG.lang.BLACK : CONFIG.lang.WHITE}】${CONFIG.lang.WIN}！！`);
         }, 100);
         isGameOver = true;
       }
@@ -191,7 +191,7 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
 
     // piece.$view.draw(ctx);
   } else if (!isGameStart){
-    alert('请开始游戏');
+    alert(CONFIG.lang.PLEASE_START_GAME);
   }
 
 });
