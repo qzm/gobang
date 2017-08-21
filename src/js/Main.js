@@ -146,9 +146,6 @@ document.getElementById('signout').addEventListener('click', () => {
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
   if (isGameStart && !isGameOver) {
-    handPiece.$view.$model.x = event.layerX;
-    handPiece.$view.$model.y = event.layerY;
-    handPiece.$view.$model.type = !player ? 'white' : 'black';
     const point = getPieceLocation(
       event.layerX,
       event.layerY,
@@ -163,6 +160,10 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       notInChessboard(pieceList, point)
     ) {
       setPlayer();
+      handPiece.$view.$model.x = event.layerX;
+      handPiece.$view.$model.y = event.layerY;
+      handPiece.$view.$model.type = player ? 'white' : 'black';
+
       let piece = new PieceContraller(new PieceView(new PieceModel({
         type: player ? 'black' : 'white',
         // canvas位置
