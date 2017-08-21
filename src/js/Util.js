@@ -1,3 +1,4 @@
+import CONFIG from './config';
 /**
  * 创建对象（精灵）池
  * @param {Int} 对象池大小
@@ -83,11 +84,11 @@ function isVerticalSuccess(matrix, lastPiece) {
   right > 14 ? right = 14 : right = right;
   while (left < right) {
     if (matrix[left][horizon]) {
-      if (matrix[left][horizon].$view.$model.type === 'black') {
+      if (matrix[left][horizon].$view.$model.type === CONFIG.BLACK) {
         white = 0;
         black++;
         if (black >= 5) return true;
-      } else if (matrix[left][horizon].$view.$model.type === 'white') {
+      } else if (matrix[left][horizon].$view.$model.type === CONFIG.WHITE) {
         black = 0;
         white++;
         if (white >= 5) return true;
@@ -96,7 +97,6 @@ function isVerticalSuccess(matrix, lastPiece) {
       white = 0;
       black = 0;
     }
-    console.log('black', black, 'white', white, 'left', left, 'right', right);
     // 往右移动
     left++;
   }
@@ -119,11 +119,11 @@ function isHorizontalSuccess(matrix, lastPiece) {
   down > 14 ? down = 14 : down = down;
   while (up < down) {
     if (matrix[vertical][up]) {
-      if (matrix[vertical][up].$view.$model.type === 'black') {
+      if (matrix[vertical][up].$view.$model.type === CONFIG.BLACK) {
         white = 0;
         black++;
         if (black >= 5) return true;
-      } else if (matrix[vertical][up].$view.$model.type === 'white') {
+      } else if (matrix[vertical][up].$view.$model.type === CONFIG.WHITE) {
         black = 0;
         white++;
         if (white >= 5) return true;
@@ -161,11 +161,11 @@ function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
   }
   while (xMin < xMax && yMin < yMax) {
     if (matrix[xMin][yMin]) {
-      if (matrix[xMin][yMin].$view.$model.type === 'black') {
+      if (matrix[xMin][yMin].$view.$model.type === CONFIG.BLACK) {
         white = 0;
         black++;
         if (black >= 5) return true;
-      } else if (matrix[xMin][yMin].$view.$model.type === 'white') {
+      } else if (matrix[xMin][yMin].$view.$model.type === CONFIG.WHITE) {
         black = 0;
         white++;
         if (white >= 5) return true;
@@ -204,11 +204,11 @@ function isRightUpToLeftBottomSuccess(matrix, lastPiece) {
   }
   while (xMin <= xMax && yMin <= yMax) {
     if (matrix[xMax][yMin]) {
-      if (matrix[xMax][yMin].$view.$model.type === 'black') {
+      if (matrix[xMax][yMin].$view.$model.type === CONFIG.BLACK) {
         white = 0;
         black++;
         if (black >= 5) return true;
-      } else if (matrix[xMax][yMin].$view.$model.type === 'white') {
+      } else if (matrix[xMax][yMin].$view.$model.type === CONFIG.WHITE) {
         black = 0;
         white++;
         if (white >= 5) return true;

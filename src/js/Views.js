@@ -1,5 +1,6 @@
 // 对象池
 import pool from './Pool';
+import CONFIG from './config';
 
 /**
  * View 基类
@@ -42,7 +43,7 @@ class PieceView extends View {
   draw(canvas) {
     canvas.beginPath();
     canvas.lineWidth = this.$model.lineWidth;
-    if(this.$model.type === 'white') {
+    if(this.$model.type === CONFIG.WHITE) {
       canvas.fillStyle = 'white';
     } else {
       canvas.fillStyle = this.$model.lineColor;

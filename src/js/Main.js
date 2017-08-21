@@ -17,6 +17,7 @@ import {
   ChessboardModel,
   PieceListModel,
 } from './Models';
+import CONFIG from './config';
 // 简单的单向数据绑定
 const mvvm = {
   playerMsg: ''
@@ -71,7 +72,7 @@ const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardMod
   y: canvasGap,
   width: canvasWidth - canvasGap * 2,
   height: canvasHeight - canvasGap * 2,
-  lineColor: '#ddd',
+  lineColor: CONFIG.LINE_COLOR,
   lineWidth: 1,
   name: 'chessboard'
 })));
@@ -81,7 +82,7 @@ let pieceList = '';
 // 手持的棋子
 let handPiece = new PieceContraller(new PieceView(new PieceModel({
   radius: 15,
-  lineColor: '#333'
+  lineColor: CONFIG.BLACK_COLOR
 })));
 //  动画循环
 function animation() {
@@ -104,10 +105,10 @@ run(animation);
 
 function setPlayer() {
   if (player) {
-    mvvm.playerMsg = '【黑方】执棋';
+    mvvm.playerMsg = CONFIG.lang.CHARGE_BLACK;
     player = 0;
   } else {
-    mvvm.playerMsg = '【白方】执棋';
+    mvvm.playerMsg = CONFIG.lang.CHARGE_WHITE;
     player = 1;
   }
 }
@@ -122,7 +123,7 @@ playButton.addEventListener('click', () => {
   pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
     name: 'PieceList'
   })));
-  playButton.innerText = '重新开始';
+  playButton.innerText = CONFIG.lang.REPLAY;
 });
 
 // 控制面板 - 悔棋
@@ -136,11 +137,11 @@ document.getElementById('canvas-view').addEventListener('mousemove', (event) => 
   // console.log(event.layerX, event.layerY);
   handPiece.$view.$model.x = event.layerX;
   handPiece.$view.$model.y = event.layerY;
-  handPiece.$view.$model.type = player ? 'white' : 'black';
+  handPiece.$view.$model.type = player ? CONFIG.WHITE : CONFIG.BLACK;
 });
 // 控制面板 - 退出游戏
 document.getElementById('signout').addEventListener('click', () => {
-  alert('关闭浏览器就好了呀！');
+  alert(CONFIG.lang.CLOSE_MSG);
 });
 
 // 屏幕点击事件
@@ -162,10 +163,10 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       setPlayer();
       handPiece.$view.$model.x = event.layerX;
       handPiece.$view.$model.y = event.layerY;
-      handPiece.$view.$model.type = player ? 'white' : 'black';
+      handPiece.$view.$model.type = player ? CONFIG.WHITE : CONFIG.BLACK;
 
       let piece = new PieceContraller(new PieceView(new PieceModel({
-        type: player ? 'black' : 'white',
+        type: player ? CONFIG.BLACK : CONFIG.WHITE,
         // canvas位置
         x: point.x,
         y: point.y,
