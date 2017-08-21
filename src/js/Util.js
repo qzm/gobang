@@ -81,7 +81,7 @@ function isVerticalSuccess(matrix, lastPiece) {
   let right = lastPiece.$view.$model.a + 5;
   left < 0 ? left = 0 : left = left;
   right > 14 ? right = 14 : right = right;
-  while (left < right - 4) {
+  while (left < right) {
     if (matrix[left][horizon]) {
       if (matrix[left][horizon].$view.$model.type === 'black') {
         white = 0;
@@ -117,14 +117,16 @@ function isHorizontalSuccess(matrix, lastPiece) {
   let down = lastPiece.$view.$model.b + 5;
   up < 0 ? up = 0 : up = up;
   down > 14 ? down = 14 : down = down;
-  while (up < down - 4) {
+  while (up < down) {
     if (matrix[vertical][up]) {
       if (matrix[vertical][up].$view.$model.type === 'black') {
         white = 0;
         black++;
+        if (black >= 5) return true;
       } else if (matrix[vertical][up].$view.$model.type === 'white') {
         black = 0;
         white++;
+        if (white >= 5) return true;
       }
     } else {
       white = 0;
