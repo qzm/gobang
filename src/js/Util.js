@@ -58,14 +58,12 @@ function makeMatrix() {
  */
 
 function toMatrix(list) {
-  // console.log(list);
   // 生成一个空白的二维数组
   let matrix = makeMatrix();
   // 将对象填充进去
   list.forEach((onePiece) => {
     matrix[onePiece.$view.$model.a][onePiece.$view.$model.b] = onePiece;
   });
-  // console.log(matrix);
   return matrix;
 }
 
@@ -142,14 +140,12 @@ function isHorizontalSuccess(matrix, lastPiece) {
  * @return {Boolean} 是否存在胜利
  */
 function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
-  const isABigerThanB = lastPiece.$view.$model.a > lastPiece.$view.$model.b;
   let black = 0;
   let white = 0;
   let xMin = lastPiece.$view.$model.a - 5;
   let xMax = lastPiece.$view.$model.a + 5;
   let yMin = lastPiece.$view.$model.b - 5;
   let yMax = lastPiece.$view.$model.b + 5;
-  console.log('a', lastPiece.$view.$model.a, 'b', lastPiece.$view.$model.b);
   while (xMin < 0 || yMin < 0) {
     xMin++;
     yMin++;
@@ -159,7 +155,6 @@ function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
     yMax--;
   }
   while (xMin < xMax && yMin < yMax) {
-    console.log('xMin', xMin, 'yMin', yMin, 'xMax', xMax, 'yMax', yMax, 'black', black, 'white', white);
     if (matrix[xMin][yMin]) {
       if (matrix[xMin][yMin].$view.$model.type === 'black') {
         white = 0;
@@ -174,7 +169,6 @@ function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
       white = 0;
       black = 0;
     }
-    console.log('xMin', xMin, 'yMin', yMin, 'xMax', xMax, 'yMax', yMax, 'black', black, 'white', white);
 
     xMin++;
     yMin++;
@@ -183,14 +177,46 @@ function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
 }
 
 /**
- * 左上到右下是否有连续五颗棋子
+ * 右到左下是否有连续五颗棋子
  * @param {Array} matrix
  * @param {Object} lastPiece
  * @return {Boolean} 是否存在胜利
  */
 function isRightUpToLeftBottomSuccess(matrix, lastPiece) {
-  let sum = 0;
-  return false;
+  let black = 0;
+  let white = 0;
+  let xMin = lastPiece.$view.$model.a - 5;
+  let xMax = lastPiece.$view.$model.a + 5;
+  let yMin = lastPiece.$view.$model.b - 5;
+  let yMax = lastPiece.$view.$model.b + 5;
+  while (xMin < 0 || yMin < 0) {
+    xMin++;
+    yMin++;
+  }
+  while (xMax > 14 || yMax > 14) {
+    xMax--;
+    yMax--;
+  }
+  while (xMin <= xMax && yMin <= yMax) {
+    if (matrix[xMax][yMin]) {
+      if (matrix[xMax][yMin].$view.$model.type === 'black') {
+        white = 0;
+        black++;
+        if (black >= 5) return true;
+      } else if (matrix[xMax][yMin].$view.$model.type === 'white') {
+        black = 0;
+        white++;
+        if (white >= 5) return true;
+      }
+    } else {
+      white = 0;
+      black = 0;
+    }
+
+    xMax--;
+    yMin++;
+  };
+  return white >= 5 || black >= 5;
 }
 
 /**
@@ -365,10 +391,8 @@ const isWeakSet = typeFactory('WeakSet');
 const getPieceLocation = cached((x, y, areaWidth, areaHeight, gap) => {
   const widthStep = (areaWidth - gap * 2) / 15
   const heightStep = (areaHeight - gap * 2) / 15
-  console.log(widthStep, heightStep);
   const a = Math.floor((x - gap) / widthStep);
   const b = Math.floor((y - gap) / heightStep);
-  console.log({ x, y, a, b});
   return {
     x: (a + 0.5 ) * widthStep + gap,
     y: (b + 0.5 ) * heightStep + gap,
