@@ -119,7 +119,7 @@ playButton.addEventListener('click', () => {
 
 // 控制面板 - 悔棋
 document.getElementById('withdraw').addEventListener('click', () => {
-  if (pieceList && pieceList.$view.$model.pieceList.length > 0) {
+  if (!isGameOver && pieceList && pieceList.$view.$model.pieceList.length > 0) {
     pieceList.pop();
     setPlayer();
   }
