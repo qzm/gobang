@@ -142,8 +142,44 @@ function isHorizontalSuccess(matrix, lastPiece) {
  * @return {Boolean} 是否存在胜利
  */
 function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
-  let sum = 0;
-  return false;
+  const isABigerThanB = lastPiece.$view.$model.a > lastPiece.$view.$model.b;
+  let black = 0;
+  let white = 0;
+  let xMin = lastPiece.$view.$model.a - 5;
+  let xMax = lastPiece.$view.$model.a + 5;
+  let yMin = lastPiece.$view.$model.b - 5;
+  let yMax = lastPiece.$view.$model.b + 5;
+  console.log('a', lastPiece.$view.$model.a, 'b', lastPiece.$view.$model.b);
+  while (xMin < 0 || yMin < 0) {
+    xMin++;
+    yMin++;
+  }
+  while (xMax > 14 || yMax > 14) {
+    xMax--;
+    yMax--;
+  }
+  while (xMin < xMax && yMin < yMax) {
+    console.log('xMin', xMin, 'yMin', yMin, 'xMax', xMax, 'yMax', yMax, 'black', black, 'white', white);
+    if (matrix[xMin][yMin]) {
+      if (matrix[xMin][yMin].$view.$model.type === 'black') {
+        white = 0;
+        black++;
+        if (black >= 5) return true;
+      } else if (matrix[xMin][yMin].$view.$model.type === 'white') {
+        black = 0;
+        white++;
+        if (white >= 5) return true;
+      }
+    } else {
+      white = 0;
+      black = 0;
+    }
+    console.log('xMin', xMin, 'yMin', yMin, 'xMax', xMax, 'yMax', yMax, 'black', black, 'white', white);
+
+    xMin++;
+    yMin++;
+  };
+  return white >= 5 || black >= 5;
 }
 
 /**
