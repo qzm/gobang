@@ -237,7 +237,7 @@ function judgeSuccess(pieceList) {
     const hs = isHorizontalSuccess(matrix, lastPiece);
     // 左上到右下是否有连续五颗棋子
     const urrbs = isLeftUpToRightBottomSuccess(matrix, lastPiece);
-    // 左上到右下是否有连续五颗棋子
+    // 右上到左下是否有连续五颗棋子
     const rulbs = isRightUpToLeftBottomSuccess(matrix, lastPiece);
     if (vs || hs || urrbs || rulbs) {
       return true;
