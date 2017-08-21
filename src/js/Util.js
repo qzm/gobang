@@ -109,8 +109,30 @@ function isVerticalSuccess(matrix, lastPiece) {
  * @return {Boolean} 是否存在胜利
  */
 function isHorizontalSuccess(matrix, lastPiece) {
-  let sum = 0;
-  return false;
+  const vertical = lastPiece.$view.$model.a;
+  let black = 0;
+  let white = 0;
+  let up = lastPiece.$view.$model.b - 5;
+  let down = lastPiece.$view.$model.b + 5;
+  up < 0 ? up = 0 : up = up;
+  down > 14 ? down = 14 : down = down;
+  while (up < down - 4) {
+    if (matrix[vertical][up]) {
+      if (matrix[vertical][up].$view.$model.type === 'black') {
+        white = 0;
+        black++;
+      } else if (matrix[vertical][up].$view.$model.type === 'white') {
+        black = 0;
+        white++;
+      }
+    } else {
+      white = 0;
+      black = 0;
+    }
+    // 往右移动
+    up++;
+  }
+  return white >= 5 || black >= 5;
 }
 
 /**
