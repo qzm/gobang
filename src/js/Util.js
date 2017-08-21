@@ -40,7 +40,7 @@ function ObjectPool() {
  * 生成一个 15 * 15 的二维数组
  */
 function makeMatrix() {
-    // 初始化矩阵
+  // 初始化矩阵
   let matrix = [];
   let counter = 15;
   while (counter--) {
@@ -86,18 +86,21 @@ function isVerticalSuccess(matrix, lastPiece) {
       if (matrix[left][horizon].$view.$model.type === 'black') {
         white = 0;
         black++;
+        if (black >= 5) return true;
       } else if (matrix[left][horizon].$view.$model.type === 'white') {
         black = 0;
         white++;
+        if (white >= 5) return true;
       }
     } else {
       white = 0;
       black = 0;
     }
+    console.log('black', black, 'white', white, 'left', left, 'right', right);
     // 往右移动
     left++;
   }
-  return white >= 5 || black >= 5;
+  return false;
 }
 
 /**
@@ -394,8 +397,8 @@ const getPieceLocation = cached((x, y, areaWidth, areaHeight, gap) => {
   const a = Math.floor((x - gap) / widthStep);
   const b = Math.floor((y - gap) / heightStep);
   return {
-    x: (a + 0.5 ) * widthStep + gap,
-    y: (b + 0.5 ) * heightStep + gap,
+    x: (a + 0.5) * widthStep + gap,
+    y: (b + 0.5) * heightStep + gap,
     a,
     b
   };

@@ -78,7 +78,11 @@ const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardMod
 
 // 棋子列表
 let pieceList = '';
-
+// 手持的棋子
+let handPiece = new PieceContraller(new PieceView(new PieceModel({
+  radius: 15,
+  lineColor: '#333'
+})));
 //  动画循环
 function animation() {
   // 清空棋盘
@@ -88,6 +92,10 @@ function animation() {
   // 绘制棋子列表
   if (pieceList) {
     pieceList.$view.draw(ctx);
+  }
+  // 手持的棋子
+  if (isGameStart) {
+    handPiece.$view.draw(ctx);
   }
   // some step
   run(animation);
@@ -124,6 +132,12 @@ document.getElementById('withdraw').addEventListener('click', () => {
     setPlayer();
   }
 });
+document.getElementById('canvas-view').addEventListener('mousemove', (event) => {
+  // console.log(event.layerX, event.layerY);
+  handPiece.$view.$model.x = event.layerX;
+  handPiece.$view.$model.y = event.layerY;
+  handPiece.$view.$model.type = player ? 'white' : 'black';
+});
 // 控制面板 - 退出游戏
 document.getElementById('signout').addEventListener('click', () => {
   alert('关闭浏览器就好了呀！');
@@ -132,6 +146,9 @@ document.getElementById('signout').addEventListener('click', () => {
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
   if (isGameStart && !isGameOver) {
+    handPiece.$view.$model.x = event.layerX;
+    handPiece.$view.$model.y = event.layerY;
+    handPiece.$view.$model.type = !player ? 'white' : 'black';
     const point = getPieceLocation(
       event.layerX,
       event.layerY,
