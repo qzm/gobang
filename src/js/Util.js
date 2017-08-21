@@ -65,7 +65,7 @@ function toMatrix(list) {
   list.forEach((onePiece) => {
     matrix[onePiece.$view.$model.a][onePiece.$view.$model.b] = onePiece;
   });
-  console.log(matrix);
+  // console.log(matrix);
   return matrix;
 }
 
@@ -73,48 +73,66 @@ function toMatrix(list) {
  * 横向是否有连续五颗棋子
  * @param {Array} matrix
  * @param {Object} lastPiece
+ * @return {Boolean} 是否存在胜利
  */
 function isVerticalSuccess(matrix, lastPiece) {
-  let sum = 0;
-  let left = lastPiece.$view.$model.a - 9;
-  let right = lastPiece.$view.$model.a + 9;
+  const horizon = lastPiece.$view.$model.b;
+  let black = 0;
+  let white = 0;
+  let left = lastPiece.$view.$model.a - 5;
+  let right = lastPiece.$view.$model.a + 5;
   left < 0 ? left = 0 : left = left;
   right > 14 ? right = 14 : right = right;
   while (left < right - 4) {
-    // TODO: 判断
+    if (matrix[left][horizon]) {
+      if (matrix[left][horizon].$view.$model.type === 'black') {
+        white = 0;
+        black++;
+      } else if (matrix[left][horizon].$view.$model.type === 'white') {
+        black = 0;
+        white++;
+      }
+    } else {
+      white = 0;
+      black = 0;
+    }
     // 往右移动
     left++;
   }
+  return white >= 5 || black >= 5;
 }
 
 /**
  * 纵向是否有连续五颗棋子
  * @param {Array} matrix
  * @param {Object} lastPiece
+ * @return {Boolean} 是否存在胜利
  */
 function isHorizontalSuccess(matrix, lastPiece) {
   let sum = 0;
-
+  return false;
 }
 
 /**
  * 左上到右下是否有连续五颗棋子
  * @param {Array} matrix
  * @param {Object} lastPiece
+ * @return {Boolean} 是否存在胜利
  */
 function isLeftUpToRightBottomSuccess(matrix, lastPiece) {
   let sum = 0;
-
+  return false;
 }
 
 /**
  * 左上到右下是否有连续五颗棋子
  * @param {Array} matrix
  * @param {Object} lastPiece
+ * @return {Boolean} 是否存在胜利
  */
 function isRightUpToLeftBottomSuccess(matrix, lastPiece) {
   let sum = 0;
-
+  return false;
 }
 
 /**
@@ -128,7 +146,7 @@ function judgeSuccess(pieceList) {
     // 生成棋盘矩阵
     const matrix = toMatrix(list);
     // 最后一枚棋子位置
-    const lastPiece = list[list.langth - 1];
+    const lastPiece = list[list.length - 1];
     // 横向是否有连续五个棋子
     const vs = isVerticalSuccess(matrix, lastPiece);
     // 纵向是否有连续五颗棋子

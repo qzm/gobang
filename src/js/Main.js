@@ -147,7 +147,7 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
     ) {
       setPlayer();
       let piece = new PieceContraller(new PieceView(new PieceModel({
-        type: player ? 'balck' : 'white',
+        type: player ? 'black' : 'white',
         // canvas位置
         x: point.x,
         y: point.y,
@@ -163,6 +163,9 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       }
       // 判断胜负
       if (judgeSuccess(pieceList)) {
+        setTimeout(() => {
+          alert(`【${player ? '黑方' : '白方'}】胜利！！`);
+        }, 100);
         isGameOver = true;
       }
     }
