@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import { run, getPieceLocation, cached, notInChessboard, judgeSuccess } from './Util';
 import {
   Contraller,
