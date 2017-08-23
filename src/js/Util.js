@@ -194,13 +194,13 @@ function isRightUpToLeftBottomSuccess(matrix, lastPiece) {
   let xMax = lastPiece.$view.$model.a + 5;
   let yMin = lastPiece.$view.$model.b - 5;
   let yMax = lastPiece.$view.$model.b + 5;
-  while (xMin < 0 || yMin < 0) {
+  while (xMin < 0 || yMax > 14) {
     xMin++;
-    yMin++;
-  }
-  while (xMax > 14 || yMax > 14) {
-    xMax--;
     yMax--;
+  }
+  while (xMax > 14 || yMin < 0) {
+    xMax--;
+    yMin++;
   }
   while (xMin <= xMax && yMin <= yMax) {
     if (matrix[xMax][yMin]) {
