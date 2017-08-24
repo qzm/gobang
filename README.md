@@ -1,6 +1,9 @@
 # gobang
 简单的五子棋，基于Canvas，使用原生JS编写，不使用第三发中间件，只包含项目构建时候用的开发工具
 
+# DEMO
+https://qzm.github.io/gobang/
+
 ## 简介
 * webpack + webpack-dev-server
 * babel-loader + babel-es2015-preset + babel-env-preset + babel-stage-2-preset
