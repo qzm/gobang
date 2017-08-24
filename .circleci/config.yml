@@ -28,7 +28,7 @@ jobs:
 
       - run: yarn install
       - run: yarn run build
-      - run: git add dist && git commit -m "Initial dist subtree commit"
+      - run: git add dist -f && git commit -m "Initial dist subtree commit"
       - run: git subtree push --prefix dist origin gh-pages
 
       - save_cache:
