@@ -12,6 +12,7 @@ https://qzm.github.io/gobang/
 * less and less-loader
 
 ## 相关技术
+* service worker 可以离线玩游戏
 * MVC模式，Model,View,Controller分离，切换到Dom的时候，只需更改View层
 * 悔棋功能，通过堆栈实现悔棋功能
 * 对象池
