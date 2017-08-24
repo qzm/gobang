@@ -31,8 +31,8 @@ jobs:
       - run: git config --global user.email "chiminyau@gmail.com"
       - run: git config --global user.name "Chimin Yau"
       - run: git add dist -f && git commit -m "Initial dist subtree commit"
-      - run: git push origin `git subtree split --prefix dist origin gh-pages`:production --force
-
+      - run: git push origin `git subtree split --prefix dist master`:gh-pages --force
+      
       - save_cache:
           paths:
             - node_modules
