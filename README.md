@@ -2,7 +2,8 @@
 简单的五子棋，基于Canvas，使用原生JS编写，不使用第三发中间件，只包含项目构建时候用的开发工具
 
 # DEMO
-https://qzm.github.io/gobang/
+* 使用Circle CI自动构建Github Pages ![](https://img.shields.io/circleci/project/qzm/gobang/master.svg)
+* Github Pages：https://qzm.github.io/gobang/
 
 ## 简介
 * webpack + webpack-dev-server
