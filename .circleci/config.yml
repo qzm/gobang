@@ -27,13 +27,11 @@ jobs:
           - v1-dependencies-
 
       - run: yarn install
+      - run: yarn run build
+      - run: git add dist && git commit -m "Initial dist subtree commit"
+      - run: git subtree push --prefix dist origin gh-pages
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      - run: yarn test
-
-

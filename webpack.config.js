@@ -12,7 +12,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.[hash:8].min.js',
-    path: __dirname + '/docs'
+    path: __dirname + '/dist'
   },
   module: {
     rules: [{
@@ -56,7 +56,7 @@ module.exports = {
     }),
     // 删除多余的bundle,Style,index文件
     new CleanWebpackPlugin([
-      'docs/*',
+      'dist/*',
     ], {
       root: __dirname,
       verbose: true,
