@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 console.log(__dirname);
 
@@ -32,6 +33,13 @@ module.exports = {
 
   },
   plugins: [
+    // service worker
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'gobang-cache',
+      filename: 'service-worker.js',
+      minify: true,
+      navigateFallback: 'index.html'
+    }),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin("style.[hash:8].min.css"),
