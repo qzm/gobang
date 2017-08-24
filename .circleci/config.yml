@@ -31,7 +31,7 @@ jobs:
       - run: git config --global user.email "chiminyau@gmail.com"
       - run: git config --global user.name "Chimin Yau"
       - run: git add dist -f && git commit -m "Initial dist subtree commit"
-      - run: git subtree push --prefix dist origin gh-pages
+      - run: git subtree push -f --prefix dist origin gh-pages
 
       - save_cache:
           paths:
