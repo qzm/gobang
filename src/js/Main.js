@@ -23,7 +23,6 @@ import CONFIG from './config';
 // service worker
 if('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
-  console.log('SERVICE_WORKER');
 }
 // 简单的单向数据绑定
 const mvvm = {
