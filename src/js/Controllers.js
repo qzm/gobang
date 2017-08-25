@@ -2,9 +2,9 @@
 import pool from './Pool';
 
 /**
- * Contraller 基类
+ * Controller 基类
  */
-class Contraller {
+class Controller {
   constructor(view) {
     this.$view = view;
     this.name = this.$view.name;
@@ -19,7 +19,7 @@ class Contraller {
   }
   // 基础的打印方法
   toString() {
-    return `Contraller:${this.name}`;
+    return `Controller:${this.name}`;
   }
   // 回收
   recover() {
@@ -30,7 +30,7 @@ class Contraller {
 /**
  * 棋子控制器
  */
-class PieceContraller extends Contraller {
+class PieceController extends Controller {
   constructor(view) {
     super(view);
   }
@@ -38,7 +38,7 @@ class PieceContraller extends Contraller {
 /**
  * 棋子数组控制器
  */
-class PieceListContraller extends Contraller {
+class PieceListController extends Controller {
   constructor(view) {
     super(view);
   }
@@ -55,15 +55,15 @@ class PieceListContraller extends Contraller {
 /**
  * 棋盘控制器
  */
-class ChessboardContraller extends Contraller {
+class ChessboardController extends Controller {
   constructor(view) {
     super(view);
   }
 }
 
 export {
-  Contraller,
-  PieceContraller,
-  PieceListContraller,
-  ChessboardContraller,
+  Controller,
+  PieceController,
+  PieceListController,
+  ChessboardController,
 }

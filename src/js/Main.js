@@ -1,11 +1,11 @@
 // import 'babel-polyfill';
 import { run, getPieceLocation, cached, notInChessboard, judgeSuccess } from './Util';
 import {
-  Contraller,
-  PieceContraller,
-  ChessboardContraller,
-  PieceListContraller,
-} from './Contrallers';
+  Controller,
+  PieceController,
+  ChessboardController,
+  PieceListController,
+} from './Controllers';
 import {
   View,
   PieceView,
@@ -70,11 +70,11 @@ let player = CONFIG.BLACK;
 let isGameStart = false;
 let isGameOver = true;
 // hello
-const hello = new Contraller(new View(new Model({ name: 'Welcome to this game!' })));
+const hello = new Controller(new View(new Model({ name: 'Welcome to this game!' })));
 console.info(hello.getName());
 
 // 棋盘
-const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardModel({
+const chessboard = new ChessboardController(new ChessboardView(new ChessboardModel({
   x: canvasGap,
   y: canvasGap,
   width: canvasWidth - canvasGap * 2,
@@ -87,7 +87,7 @@ const chessboard = new ChessboardContraller(new ChessboardView(new ChessboardMod
 // 棋子列表
 let pieceList = '';
 // 手持的棋子
-let handPiece = new PieceContraller(new PieceView(new PieceModel({
+let handPiece = new PieceController(new PieceView(new PieceModel({
   radius: 15,
   lineColor: CONFIG.BLACK_COLOR
 })));
@@ -127,7 +127,7 @@ playButton.addEventListener('click', () => {
   isGameOver = false;
   pieceList = null;
   player = CONFIG.WHITE;
-  pieceList = new PieceListContraller(new PieceListView(new PieceListModel({
+  pieceList = new PieceListController(new PieceListView(new PieceListModel({
     name: 'PieceList'
   })));
   playButton.innerText = CONFIG.lang.REPLAY;
@@ -172,7 +172,7 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       handPiece.$view.$model.y = event.layerY;
       handPiece.$view.$model.type = player === CONFIG.BLACK ? CONFIG.WHITE : CONFIG.BLACK;
 
-      let piece = new PieceContraller(new PieceView(new PieceModel({
+      let piece = new PieceController(new PieceView(new PieceModel({
         type: player === CONFIG.BLACK ? CONFIG.BLACK : CONFIG.WHITE,
         // canvas位置
         x: point.x,
