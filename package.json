@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
     "start": "webpack-dev-server",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "docker": "webpack -p && docker-compose -f docker-compose.debug.yml up",
+    "docker-build": "webpack -p && docker-compose up -d"
   },
   "keywords": [
     "五子棋"

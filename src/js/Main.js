@@ -24,6 +24,7 @@ import CONFIG from './config';
 if('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
+console.log('SW TEST');
 // 简单的单向数据绑定
 const mvvm = {
   playerMsg: ''
