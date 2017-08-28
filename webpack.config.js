@@ -6,7 +6,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 console.log(__dirname);
 
-module.exports = {
+const webpackModule = {
   entry: {
     app: __dirname + '/src/app.js'
   },
@@ -66,3 +66,8 @@ module.exports = {
   ],
 
 };
+if (process.env.NODE_ENV_REPORT) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  webpackModule.plugins.push(new BundleAnalyzerPlugin())
+}
+module.exports = webpackModule;

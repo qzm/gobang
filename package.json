@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
     "start": "webpack-dev-server",
+    "report": "export NODE_ENV_REPORT=true&& webpack -p",
     "build": "webpack -p",
     "docker": "webpack -p && docker-compose -f docker-compose.debug.yml up",
     "docker-build": "webpack -p && docker-compose up -d"
@@ -41,6 +42,7 @@
     "sw-precache": "^5.2.0",
     "sw-precache-webpack-plugin": "^0.11.4",
     "webpack": "^3.4.1",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.6.1"
   },
   "dependencies": {
