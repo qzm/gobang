@@ -30,6 +30,7 @@ jobs:
 
       - run: yarn install
       - run: yarn run build
+      - run: rm -f -r ./dist/*.gz && gzip -9 -k -q -f ./dist/*.*
       - run: git config --global user.email "chiminyau@gmail.com"
       - run: git config --global user.name "Chimin Yau"
       - run: git add dist -f && git commit -m "Initial dist subtree commit"
