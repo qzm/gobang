@@ -85,7 +85,9 @@ const chessboard = new ChessboardController(new ChessboardView(new ChessboardMod
 })));
 
 // 棋子列表
-let pieceList = '';
+let pieceList = null;
+// 悔棋列表
+let withdrawPieceList = null;
 // 手持的棋子
 let handPiece = new PieceController(new PieceView(new PieceModel({
   radius: 15,
@@ -126,9 +128,15 @@ playButton.addEventListener('click', () => {
   isGameStart = true;
   isGameOver = false;
   pieceList = null;
+  withdrawPieceList = null;
   player = CONFIG.WHITE;
+  // 棋盘列表
   pieceList = new PieceListController(new PieceListView(new PieceListModel({
     name: 'PieceList'
+  })));
+  // 悔棋列表
+  withdrawPieceList = new PieceListController(new PieceListView(new PieceListModel({
+    name: 'withdrawPieceList'
   })));
   playButton.innerText = CONFIG.lang.REPLAY;
 });
@@ -136,7 +144,14 @@ playButton.addEventListener('click', () => {
 // 控制面板 - 悔棋
 document.getElementById('withdraw').addEventListener('click', () => {
   if (!isGameOver && pieceList && pieceList.$view.$model.pieceList.length > 0) {
-    pieceList.pop();
+    withdrawPieceList.push(pieceList.pop());
+    setPlayer();
+  }
+});
+// 控制面板 - 撤销悔棋
+document.getElementById('unwithdraw').addEventListener('click', () => {
+  if (!isGameOver && withdrawPieceList && withdrawPieceList.$view.$model.pieceList.length > 0) {
+    pieceList.push(withdrawPieceList.pop());
     setPlayer();
   }
 });
@@ -187,6 +202,8 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       if (pieceList) {
         pieceList.push(piece);
       }
+      // 清空悔棋列表
+      withdrawPieceList.clear();
       // 判断胜负
       if (judgeSuccess(pieceList)) {
         setTimeout(() => {

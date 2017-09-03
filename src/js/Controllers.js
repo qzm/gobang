@@ -48,7 +48,11 @@ class PieceListController extends Controller {
   }
   // 悔棋
   pop() {
-    this.$view.$model.pieceList.pop();
+    return this.$view.$model.pieceList.pop();
+  }
+  // 清空
+  clear() {
+    this.$view.$model.pieceList = [];
   }
 }
 
