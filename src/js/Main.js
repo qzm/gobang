@@ -1,5 +1,5 @@
 // import 'babel-polyfill';
-import { run, getPieceLocation, cached, notInChessboard, judgeSuccess } from './Util';
+import { run, getPieceLocation, cached, notInChessboard, judgeSuccess, getOffset } from './Util';
 import {
   Controller,
   PieceController,
@@ -156,9 +156,9 @@ document.getElementById('unwithdraw').addEventListener('click', () => {
   }
 });
 document.getElementById('canvas-view').addEventListener('mousemove', (event) => {
-  // console.log(event.layerX, event.layerY);
-  handPiece.$view.$model.x = event.layerX;
-  handPiece.$view.$model.y = event.layerY;
+  const offset = getOffset(canvas, event);
+  handPiece.$view.$model.x = offset.x;
+  handPiece.$view.$model.y = offset.y;
   handPiece.$view.$model.type = player === CONFIG.BLACK ? CONFIG.WHITE : CONFIG.BLACK;
 });
 // 控制面板 - 退出游戏
@@ -169,9 +169,10 @@ document.getElementById('signout').addEventListener('click', () => {
 // 屏幕点击事件
 document.getElementById('canvas-view').addEventListener('click', (event) => {
   if (isGameStart && !isGameOver) {
+    const offset = getOffset(canvas, event);
     const point = getPieceLocation(
-      event.layerX,
-      event.layerY,
+      offset.x,
+      offset.y,
       canvasWidth,
       canvasHeight,
       canvasGap
@@ -183,8 +184,9 @@ document.getElementById('canvas-view').addEventListener('click', (event) => {
       notInChessboard(pieceList, point)
     ) {
       setPlayer();
-      handPiece.$view.$model.x = event.layerX;
-      handPiece.$view.$model.y = event.layerY;
+      const offset = getOffset(canvas, event);      
+      handPiece.$view.$model.x = offset.x;
+      handPiece.$view.$model.y = offset.y;
       handPiece.$view.$model.type = player === CONFIG.BLACK ? CONFIG.WHITE : CONFIG.BLACK;
 
       let piece = new PieceController(new PieceView(new PieceModel({

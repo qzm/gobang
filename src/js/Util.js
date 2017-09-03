@@ -425,7 +425,16 @@ function notInChessboard(pieceList, point) {
   throw 'pieceList不是数组';
 }
 
+function getOffset(canvas, event) {
+  const rect = canvas.getBoundingClientRect();   
+  return {   
+   x: event.clientX - rect.left * (canvas.width / rect.width),  
+   y: event.clientY - rect.top * (canvas.height / rect.height)  
+ };  
+}
+
 export {
+  getOffset,
   run,
   cached,
   getPieceLocation,
