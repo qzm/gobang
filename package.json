@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
     "start": "webpack-dev-server",
-    "report": "export NODE_ENV_REPORT=true&& webpack -p",
-    "build": "webpack -p",
-    "docker": "webpack -p && docker-compose -f docker-compose.debug.yml up",
-    "docker-build": "webpack -p && docker-compose up -d"
+    "report": "export NODE_ENV_REPORT=true&& export NODE_ENV=production && webpack -p",
+    "build": "export NODE_ENV=production && webpack -p",
+    "docker": "export NODE_ENV=production && webpack -p && docker-compose -f docker-compose.debug.yml up",
+    "docker-build": "export NODE_ENV=production && webpack -p && docker-compose up -d"
   },
   "keywords": [
     "五子棋"

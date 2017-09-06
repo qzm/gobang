@@ -1,18 +1,18 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const path = require('path');
 
 console.log(__dirname);
 
 const webpackModule = {
   entry: {
-    app: __dirname + '/src/app.js'
+    app: path.resolve(__dirname + '/src/app.js')
   },
   output: {
     filename: 'bundle.[hash:8].min.js',
-    path: __dirname + '/dist'
+    path: path.resolve(__dirname + '/dist')
   },
   module: {
     rules: [{
@@ -21,7 +21,7 @@ const webpackModule = {
       query: {
         presets: ['env', 'es2015', 'stage-2']
       },
-      include: [__dirname + '/src']
+      include: [path.resolve(__dirname + '/src')]
     }, {
       test: /\.less$/,
       loader: ExtractTextPlugin.extract([
@@ -54,20 +54,27 @@ const webpackModule = {
         removeAttributeQuotes: true
       }
     }),
-    // 删除多余的bundle,Style,index文件
-    new CleanWebpackPlugin([
-      'dist/*',
-    ], {
-      root: __dirname,
-      verbose: true,
-      dry: false,
-      "watch": true
-    })
   ],
 
 };
 if (process.env.NODE_ENV_REPORT) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   webpackModule.plugins.push(new BundleAnalyzerPlugin())
+}
+
+console.log('====================================');
+console.log(process.env);
+console.log('====================================');
+if (process.env.NODE_ENV === 'production') {
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+  // 删除多余的bundle,Style,index文件
+  webpackModule.plugins.push(new CleanWebpackPlugin([
+    'dist/*',
+  ], {
+    root: __dirname,
+    verbose: true,
+    dry: false,
+    "watch": true
+  }));
 }
 module.exports = webpackModule;
