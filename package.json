@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server",
     "start": "webpack-dev-server",
-    "report": "export NODE_ENV_REPORT=true&& export NODE_ENV=production && webpack -p",
-    "build": "export NODE_ENV=production && webpack -p",
-    "docker": "export NODE_ENV=production && webpack -p && docker-compose -f docker-compose.debug.yml up",
-    "docker-build": "export NODE_ENV=production && webpack -p && docker-compose up -d"
+    "report": "cross-env NODE_ENV_REPORT=true webpack -p",
+    "build": "webpack -p",
+    "docker": "webpack -p && docker-compose -f docker-compose.debug.yml up",
+    "docker-build": "webpack -p && docker-compose up -d"
   },
   "keywords": [
     "五子棋"
@@ -29,6 +29,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.16",
+    "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^3.0.0",
