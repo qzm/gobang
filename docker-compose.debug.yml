@@ -1,9 +1,0 @@
-version: '2.1'
-
-services:
-  gobang:
-    image: nginx:stable-alpine
-    ports:
-      - 9000:80
-    volumes:
-      - ./dist:/usr/share/nginx/html
