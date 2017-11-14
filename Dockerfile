@@ -1,3 +1,3 @@
-FROM fnichol/uhttpd
-ADD ./dist /www
+FROM nginx:stable-alpine
+ADD ./dist /usr/share/nginx/html
 EXPOSE 80
