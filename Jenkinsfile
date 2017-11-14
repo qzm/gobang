@@ -8,7 +8,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''yarn install
+        sh '''yarn config set registry https://registry.npm.taobao.org
+yarn install
 yarn build
 cd dist/
 tar -czf ../gobang.tar.gz ./
