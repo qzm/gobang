@@ -16,9 +16,19 @@ tar -czf ../gobang.tar.gz ./
 '''
       }
     }
-    stage('gzip') {
+    stage('build image') {
       steps {
-        archiveArtifacts(artifacts: 'gobang.tar.gz', fingerprint: true)
+        sh 'docker build -t gobang .'
+      }
+    }
+    stage('export') {
+      steps {
+        sh 'docker export --output="gobang.tar" gobang'
+      }
+    }
+    stage('tar') {
+      steps {
+        archiveArtifacts(artifacts: 'gobang.tar', fingerprint: true)
       }
     }
   }
