@@ -1,7 +1,7 @@
 pipeline {
   agent {
     node {
-      label 'new-gobang'
+      label 'gobang'
     }
     
   }
