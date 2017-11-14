@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    node {
-      label 'gobang'
-    }
-    
-  }
+  agent none
   stages {
     stage('Build') {
       steps {
